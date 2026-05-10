@@ -97,7 +97,7 @@ services:
 
   post-service:
     build:
-      context: ./services/post-service/src
+      context: ../../services/post-service/src
       dockerfile: PostService.Api/Dockerfile
     container_name: post-service
     ports:
@@ -108,7 +108,7 @@ services:
 
   search-service:
     build:
-      context: ./services/search-service/src
+      context: ../../services/search-service/src
       dockerfile: SearchService.Api/Dockerfile
     container_name: search-service
     ports:
@@ -119,8 +119,8 @@ services:
 
   api-gateway:
     build:
-      context: ./gateway
-      dockerfile: ApiGateway/Dockerfile
+      context: ../../gateway/ApiGateway
+      dockerfile: Dockerfile
     container_name: api-gateway
     ports:
       - "5000:8080"
