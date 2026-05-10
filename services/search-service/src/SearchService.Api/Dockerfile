@@ -4,9 +4,9 @@ WORKDIR /src
 
 COPY . .
 
-RUN dotnet restore SearchService.Api/SearchService.Api.csproj
+RUN dotnet restore services/search-service/src/SearchService.Api/SearchService.Api.csproj
 
-RUN dotnet publish SearchService.Api/SearchService.Api.csproj \
+RUN dotnet publish services/search-service/src/SearchService.Api/SearchService.Api.csproj \
     -c Release \
     -o /app/publish
 

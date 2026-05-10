@@ -4,9 +4,9 @@ WORKDIR /src
 
 COPY . .
 
-RUN dotnet restore PostService.Api/PostService.Api.csproj
+RUN dotnet restore services/post-service/src/PostService.Api/PostService.Api.csproj
 
-RUN dotnet publish PostService.Api/PostService.Api.csproj \
+RUN dotnet publish services/post-service/src/PostService.Api/PostService.Api.csproj \
     -c Release \
     -o /app/publish
 

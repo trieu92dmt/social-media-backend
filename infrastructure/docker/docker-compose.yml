@@ -97,19 +97,19 @@ services:
 
   post-service:
     build:
-      context: ../../services/post-service/src
-      dockerfile: PostService.Api/Dockerfile
+      context: ../..
+      dockerfile: services/post-service/src/PostService.Api/Dockerfile
     container_name: post-service
     ports:
       - "5001:8080"
     depends_on:
-      - postgres
+      - postgres-post
       - rabbitmq
 
   search-service:
     build:
-      context: ../../services/search-service/src
-      dockerfile: SearchService.Api/Dockerfile
+      context: ../..
+      dockerfile: services/search-service/src/SearchService.Api/Dockerfile
     container_name: search-service
     ports:
       - "5002:8080"

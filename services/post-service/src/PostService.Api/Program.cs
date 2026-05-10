@@ -56,11 +56,11 @@ var app = builder.Build();
 
 #region Middleware
 
-if (app.Environment.IsDevelopment())
-{
+// if (app.Environment.IsDevelopment())
+// {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+// }
 
 app.UseSerilogRequestLogging();
 
