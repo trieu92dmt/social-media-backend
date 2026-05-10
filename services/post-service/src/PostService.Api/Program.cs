@@ -3,6 +3,10 @@ using PostService.Infrastructure;
 using PostService.Infrastructure.Persistence;
 using PostService.Application.Features.Posts.CreatePost;
 using Serilog;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using PostService.Api.Validators;
+using HealthChecks.NpgSql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +22,14 @@ builder.Host.UseSerilog();
 
 #endregion
 
+#region Connection Strings
+
+var connectionString =
+    builder.Configuration.GetConnectionString("Postgres");
+
+#endregion
+
+
 #region Services
 
 builder.Services.AddControllers();
@@ -29,6 +41,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddScoped<CreatePostHandler>();
+
+builder.Services.AddFluentValidationAutoValidation();
+
+builder.Services.AddValidatorsFromAssemblyContaining<
+    CreatePostRequestValidator>();
+
+builder.Services.AddHealthChecks()
+    .AddNpgSql(connectionString!);
 
 #endregion
 
@@ -65,6 +85,8 @@ app.MapGet("/", () =>
         Time = DateTime.UtcNow
     });
 });
+
+app.MapHealthChecks("/health");
 
 #endregion
 

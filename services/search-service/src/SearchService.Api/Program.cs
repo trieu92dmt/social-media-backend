@@ -25,6 +25,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddInfrastructure(builder.Configuration);
 
+// builder.Services.AddHealthChecks()
+//     .AddRabbitMQ();
+
 #endregion
 
 var app = builder.Build();
@@ -60,6 +63,8 @@ app.MapGet("/", () =>
         Time = DateTime.UtcNow
     });
 });
+
+// app.MapHealthChecks("/health");
 
 #endregion
 

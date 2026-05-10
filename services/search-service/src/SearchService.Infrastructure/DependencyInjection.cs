@@ -34,14 +34,17 @@ public static class DependencyInjection
 
             config.UsingRabbitMq((context, cfg) =>
             {
-                cfg.Host("localhost", "/", h =>
+                cfg.Host(configuration["RabbitMQ:Host"]!, "/", h =>
                 {
-                    h.Username("guest");
-                    h.Password("guest");
+                    h.Username(configuration["RabbitMQ:Username"]!);
+                    h.Password(configuration["RabbitMQ:Password"]!);
                 });
 
                 cfg.ReceiveEndpoint("post-created-search", e =>
                 {
+                    e.UseMessageRetry(r =>
+                        r.Interval(3, TimeSpan.FromSeconds(5)));
+
                     e.ConfigureConsumer<PostCreatedConsumer>(context);
                 });
             });

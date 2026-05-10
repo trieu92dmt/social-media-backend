@@ -2,6 +2,7 @@ using BuildingBlocks.Contracts.Posts;
 using MassTransit;
 using SearchService.Application.Abstractions.Services;
 using SearchService.Domain.Documents;
+using Microsoft.Extensions.Logging;
 
 namespace SearchService.Infrastructure.Consumers;
 
@@ -10,9 +11,12 @@ public class PostCreatedConsumer
 {
     private readonly ISearchService _searchService;
 
-    public PostCreatedConsumer(ISearchService searchService)
+    private readonly ILogger<PostCreatedConsumer> _logger;
+
+    public PostCreatedConsumer(ISearchService searchService, ILogger<PostCreatedConsumer> logger)
     {
         _searchService = searchService;
+        _logger = logger;
     }
 
     public async Task Consume(
@@ -29,5 +33,8 @@ public class PostCreatedConsumer
         };
 
         await _searchService.IndexPost(document);
+
+        // Log the event
+        _logger.LogInformation("Post indexed: {PostId}", document.Id);
     }
 }

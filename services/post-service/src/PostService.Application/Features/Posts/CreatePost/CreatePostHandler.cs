@@ -2,6 +2,7 @@ using PostService.Application.Abstractions.Repositories;
 using PostService.Domain.Entities;
 using MassTransit;
 using BuildingBlocks.Contracts.Posts;
+using Microsoft.Extensions.Logging;
 
 namespace PostService.Application.Features.Posts.CreatePost;
 
@@ -11,10 +12,14 @@ public class CreatePostHandler
 
     private readonly IPublishEndpoint _publishEndpoint;
 
-    public CreatePostHandler(IPostRepository repository, IPublishEndpoint publishEndpoint)
+    private readonly ILogger<CreatePostHandler> _logger;
+
+    public CreatePostHandler(IPostRepository repository, IPublishEndpoint publishEndpoint,
+        ILogger<CreatePostHandler> logger)
     {
         _repository = repository;
         _publishEndpoint = publishEndpoint;
+        _logger = logger;
     }
 
     public async Task<Guid> Handle(CreatePostCommand command)
@@ -39,6 +44,9 @@ public class CreatePostHandler
             UserId = post.UserId,
             CreatedAt = post.CreatedAt
         });
+
+        // Log the event
+        _logger.LogInformation("Post created: {PostId}", post.Id);
 
         return post.Id;
     }

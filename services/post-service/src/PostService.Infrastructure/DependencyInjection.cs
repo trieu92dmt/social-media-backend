@@ -24,10 +24,10 @@ public static class DependencyInjection
         {
             config.UsingRabbitMq((context, cfg) =>
             {
-                cfg.Host("localhost", "/", h =>
+                cfg.Host(configuration["RabbitMQ:Host"], "/", h =>
                 {
-                    h.Username("guest");
-                    h.Password("guest");
+                    h.Username(configuration["RabbitMQ:Username"]);
+                    h.Password(configuration["RabbitMQ:Password"]);
                 });
             });
         });
