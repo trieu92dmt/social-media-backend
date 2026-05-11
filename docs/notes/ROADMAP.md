@@ -163,6 +163,29 @@ Log.Logger = new LoggerConfiguration()
 - `PostService.Api` exposes a working health check endpoint.
 - Gateway and services can run together from Docker Compose.
 
+### Day 6: Shared Building Blocks
+
+**Status:** `Done`
+
+**Goal:** Establish shared building blocks for common domain, application, and infrastructure concerns.
+
+**Tasks**
+
+- [x] Create `BuildingBlocks.Application` under `building-blocks`.
+- [x] Create `BuildingBlocks.Domain` under `building-blocks`.
+- [x] Create `BuildingBlocks.Infrastructure` under `building-blocks`.
+- [x] Add shared `Result` type in `BuildingBlocks.Application`.
+- [x] Add shared `BaseEntity` type in `BuildingBlocks.Domain`.
+- [x] Add shared `DomainEvent` type in `BuildingBlocks.Domain`.
+- [x] Prepare the structure for reusable cross-service code.
+
+**Output**
+
+- Shared building block projects are available for services to reference.
+- Common application result handling is centralized through `Result`.
+- Domain entities can inherit from `BaseEntity`.
+- Domain events can use the shared `DomainEvent` base type.
+
 ## Backlog
 
 Use this section to add upcoming implementation days before promoting them into
