@@ -18,21 +18,21 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  postgres-post:
-    image: postgres:16
-    container_name: postgres-post
+  # postgres-post:
+  #   image: postgres:16
+  #   container_name: postgres-post
 
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_POST_DB}
-      TZ: Asia/Ho_Chi_Minh
+  #   environment:
+  #     POSTGRES_USER: ${POSTGRES_USER}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #     POSTGRES_DB: ${POSTGRES_POST_DB}
+  #     TZ: Asia/Ho_Chi_Minh
 
-    ports:
-      - "5434:5432"
+  #   ports:
+  #     - "5434:5432"
 
-    volumes:
-      - postgres_post_data:/var/lib/postgresql/data
+  #   volumes:
+  #     - postgres_post_data:/var/lib/postgresql/data
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -103,7 +103,7 @@ services:
     ports:
       - "5001:8080"
     depends_on:
-      - postgres-post
+      - postgres
       - rabbitmq
 
   search-service:

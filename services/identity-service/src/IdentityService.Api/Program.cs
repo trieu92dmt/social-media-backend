@@ -1,3 +1,6 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using IdentityService.Application.Features.Auth.Register;
 using IdentityService.Infrastructure;
 using Serilog;
 
@@ -36,6 +39,20 @@ builder.Services.AddInfrastructure(
 builder.Services.AddHealthChecks()
     .AddNpgSql(connectionString!);
 
+builder.Services.AddMediatR(
+    cfg =>
+    {
+        cfg.RegisterServicesFromAssembly(
+            typeof(RegisterHandler).Assembly);
+    });
+
+builder.Services
+    .AddFluentValidationAutoValidation();
+
+builder.Services
+    .AddValidatorsFromAssemblyContaining<
+        RegisterValidator>();
+
 #endregion
 
 var app = builder.Build();
@@ -58,11 +75,11 @@ app.MapControllers();
 
 app.MapGet("/", () =>
 {
-    Log.Information("Post Service is running at {Time}", DateTime.UtcNow);
+    Log.Information("Identity Service is running at {Time}", DateTime.UtcNow);
 
     return Results.Ok(new
     {
-        Service = "PostService",
+        Service = "IdentityService",
         Status = "Running",
         Time = DateTime.UtcNow
     });

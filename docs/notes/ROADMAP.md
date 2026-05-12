@@ -186,6 +186,61 @@ Log.Logger = new LoggerConfiguration()
 - Domain entities can inherit from `BaseEntity`.
 - Domain events can use the shared `DomainEvent` base type.
 
+## Week 2: Identity Service
+
+### Day 7: Identity Service Foundation
+
+**Status:** `Done`
+
+**Goal:** Create the Identity Service foundation with persistence, user domain model, and basic service plumbing.
+
+**Tasks**
+
+- [x] Create `IdentityService.Api` under `services/identity-service`.
+- [x] Create `IdentityService.Application` under `services/identity-service`.
+- [x] Create `IdentityService.Domain` under `services/identity-service`.
+- [x] Create `IdentityService.Infrastructure` under `services/identity-service`.
+- [x] Configure Serilog with Seq for centralized local logging.
+- [x] Configure basic health checks in `IdentityService.Api`.
+- [x] Add FluentValidation and MediatR package references.
+- [x] Add the `User` entity in `IdentityService.Domain`.
+- [x] Add `IdentityDbContext` in `IdentityService.Infrastructure`.
+- [x] Create the initial EF Core migration for the identity database.
+
+**Output**
+
+- Identity Service follows the same layered structure as the other services.
+- `User` is available as the initial identity domain entity.
+- `IdentityDbContext` is ready for database access and migrations.
+- Identity Service logs can be sent to Seq.
+- Identity Service exposes a basic health check endpoint.
+
+### Day 8: User Registration API
+
+**Status:** `Done`
+
+**Goal:** Implement the first Identity Service use case for user registration.
+
+**Tasks**
+
+- [x] Create `RegisterRequest` for incoming registration payloads.
+- [x] Add `RegisterValidator` for email, username, and password validation.
+- [x] Create `RegisterCommand` and `RegisterHandler` with MediatR.
+- [x] Add `IPasswordHasher` abstraction in `IdentityService.Application`.
+- [x] Implement `PasswordHasher` in `IdentityService.Infrastructure`.
+- [x] Add `IUserRepository` abstraction and `UserRepository` implementation.
+- [x] Register repository and password hashing services in dependency injection.
+- [x] Add `AuthController` with the `POST /api/auth/register` endpoint.
+- [x] Persist registered users with hashed passwords.
+
+**Output**
+
+- Registration requests are accepted through `POST /api/auth/register`.
+- Request validation runs before creating a user.
+- Duplicate email registration is rejected.
+- New users are saved to the identity database.
+- Passwords are stored as hashes instead of plain text.
+
 ## Backlog
 
 Use this section to add upcoming implementation days before promoting them into

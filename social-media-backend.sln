@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{58
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "identity-service", "identity-service", "{A86387A1-6CB7-E87F-8D97-922B56EDCEFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityService.Api", "services\identity-service\IdentityService.Api\IdentityService.Api.csproj", "{16CD3F5E-F5CD-6FD7-DB3A-6CCA4BE49D3E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "building-blocks", "building-blocks", "{31CBEB51-93DC-9CA1-DA8D-67643319BEE1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingBlocks.Application", "building-blocks\BuildingBlocks.Application\BuildingBlocks.Application.csproj", "{5E2BA008-A6CE-491E-A4C4-00E1FB433F22}"

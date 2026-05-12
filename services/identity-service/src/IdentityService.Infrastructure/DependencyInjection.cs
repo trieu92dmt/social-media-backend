@@ -1,4 +1,7 @@
+using IdentityService.Application.Interfaces;
 using IdentityService.Infrastructure.Persistence;
+using IdentityService.Infrastructure.Repositories;
+using IdentityService.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +22,10 @@ public static class DependencyInjection
                     configuration.GetConnectionString(
                         "Postgres"));
             });
+
+        services.AddScoped<IUserRepository, UserRepository>();
+
+        services.AddScoped<IPasswordHasher, PasswordHasher>();
 
         return services;
     }
