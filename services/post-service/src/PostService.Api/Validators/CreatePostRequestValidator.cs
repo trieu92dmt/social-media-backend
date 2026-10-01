@@ -11,8 +11,5 @@ public class CreatePostRequestValidator
         RuleFor(x => x.Content)
             .NotEmpty()
             .MaximumLength(500);
-
-        RuleFor(x => x.UserId)
-            .NotEmpty();
     }
 }

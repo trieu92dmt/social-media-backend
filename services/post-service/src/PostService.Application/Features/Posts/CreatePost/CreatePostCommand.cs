@@ -4,5 +4,5 @@ public class CreatePostCommand
 {
     public string Content { get; set; } = default!;
 
-    public string UserId { get; set; } = default!;
+    public Guid AuthorId { get; set; }
 }

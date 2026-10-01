@@ -21,7 +21,7 @@ public class PostsController : ControllerBase
         var command = new CreatePostCommand
         {
             Content = request.Content,
-            UserId = request.UserId
+            AuthorId = request.AuthorId
         };
 
         var postId = await _handler.Handle(command);

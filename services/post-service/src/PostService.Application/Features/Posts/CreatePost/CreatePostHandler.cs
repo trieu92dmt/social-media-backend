@@ -28,7 +28,7 @@ public class CreatePostHandler
         {
             Id = Guid.NewGuid(),
             Content = command.Content,
-            UserId = command.UserId,
+            AuthorId = command.AuthorId,
             CreatedAt = DateTime.UtcNow
         };
 
@@ -41,7 +41,7 @@ public class CreatePostHandler
         {
             PostId = post.Id,
             Content = post.Content,
-            UserId = post.UserId,
+            AuthorId = post.AuthorId,
             CreatedAt = post.CreatedAt
         });
 

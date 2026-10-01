@@ -25,5 +25,6 @@ Infrastructure:
  - Add to Solution: `dotnet sln ../../../social-media-backend.sln add UserService.Api/UserService.Api.csproj`
  - Create Migration: `dotnet ef migrations add Init --project src/IdentityService.Infrastructure --startup-project src/IdentityService.Api`
  - Update databse: `dotnet ef database update --project src/IdentityService.Infrastructure --startup-project src/IdentityService.Api` 
+ - Add Reference: `dotnet add reference ../IdentityService.Application/IdentityService.Application.csproj`
  - Run Service: `docker compose -f infrastructure/docker/docker-compose.yml up -d`
  - Rebuild and run service: `docker compose -f infrastructure\docker\docker-compose.yml up -d --build post-service`

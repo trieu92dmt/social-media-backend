@@ -6,7 +6,7 @@ public class PostCreatedIntegrationEvent
 
     public string Content { get; set; } = default!;
 
-    public string UserId { get; set; } = default!;
+    public Guid AuthorId { get; set; }
 
     public DateTime CreatedAt { get; set; }
 }
