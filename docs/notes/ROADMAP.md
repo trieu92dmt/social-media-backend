@@ -241,6 +241,33 @@ Log.Logger = new LoggerConfiguration()
 - New users are saved to the identity database.
 - Passwords are stored as hashes instead of plain text.
 
+### Day 9: Login API
+
+**Status:** `Done`
+
+**Goal:** Implement user login and protect authenticated endpoints with JWT bearer authentication.
+
+**Tasks**
+
+- [x] Create `LoginRequest` for incoming login payloads.
+- [x] Add `LoginValidator` for email and password validation.
+- [x] Create `LoginCommand` and `LoginHandler` with MediatR.
+- [x] Verify user credentials against stored password hashes.
+- [x] Add `IJwtProvider` abstraction in `IdentityService.Application`.
+- [x] Implement `JwtProvider` in `IdentityService.Infrastructure`.
+- [x] Register JWT provider in dependency injection.
+- [x] Add JWT bearer authentication configuration in `IdentityService.Api`.
+- [x] Add the `POST /api/auth/login` endpoint.
+- [x] Create `TestController` with an `[Authorize]` endpoint to verify the login flow.
+
+**Output**
+
+- Login requests are accepted through `POST /api/auth/login`.
+- Invalid email or password combinations are rejected.
+- Successful login returns a JWT access token.
+- JWT bearer authentication is enabled for protected Identity Service endpoints.
+- Authorized requests can be verified through the test endpoint.
+
 ## Backlog
 
 Use this section to add upcoming implementation days before promoting them into

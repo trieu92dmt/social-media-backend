@@ -1,0 +1,34 @@
+using Microsoft.EntityFrameworkCore;
+using IdentityService.Domain.Entities;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+public class UserActionConfiguration : IEntityTypeConfiguration<UserAction>
+{
+    public void Configure(EntityTypeBuilder<UserAction> builder)
+    {
+        builder.HasKey(x => x.Id);
+
+        // Không tự generate ID
+        builder.Property(x => x.Id)
+            .ValueGeneratedNever();
+
+        // Action Code không được null và có độ dài tối đa là 20 ký tự
+        builder.Property(x => x.ActionCode)
+            .HasMaxLength(20)
+            .IsRequired();
+
+        // Action Name không được null và có độ dài tối đa là 100 ký tự
+        builder.Property(x => x.ActionName)
+            .HasMaxLength(100)
+            .IsRequired();
+
+        // IsActive không được null và có giá trị mặc định là true
+        builder.Property(x => x.IsActive)
+            .IsRequired()
+            .HasDefaultValue(true);
+
+        // Action Code không được trùng lặp
+        builder.HasIndex(x => x.ActionCode)
+            .IsUnique();
+    }
+}

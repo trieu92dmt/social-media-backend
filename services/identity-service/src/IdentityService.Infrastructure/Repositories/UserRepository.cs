@@ -29,4 +29,20 @@ public class UserRepository
         return await _dbContext.Users
             .AnyAsync(x => x.Email == email);
     }
+
+    public async Task<User?>
+        GetByEmailAsync(string email)
+    {
+        return await _dbContext.Users
+            .FirstOrDefaultAsync(
+                x => x.Email == email);
+    }
+
+    public async Task<User?>
+        GetByIdAsync(Guid id)
+    {
+        return await _dbContext.Users
+            .FirstOrDefaultAsync(
+                x => x.Id == id);
+    }
 }
