@@ -36,12 +36,17 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 
+// Add Infrastructure services
 builder.Services.AddInfrastructure(
     builder.Configuration);
 
+
+// Add Health Checks
 builder.Services.AddHealthChecks()
     .AddNpgSql(connectionString!);
 
+
+// Add MediatR
 builder.Services.AddMediatR(
     cfg =>
     {
@@ -49,6 +54,8 @@ builder.Services.AddMediatR(
             typeof(RegisterHandler).Assembly);
     });
 
+
+// Add FluentValidation
 builder.Services
     .AddFluentValidationAutoValidation();
 
@@ -56,6 +63,17 @@ builder.Services
     .AddValidatorsFromAssemblyContaining<
         RegisterValidator>();
 
+// Add Authorization
+// builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
+// builder.Services.AddAuthorization(options =>
+// {
+//     options.DefaultPolicy = new AuthorizationPolicyBuilder()
+//         .RequireAuthenticatedUser()
+//         .AddRequirements(new PermissionAuthorizationRequirement())
+//         .Build();
+// }); 
+
+// Add Authentication
 var jwtKey =
     builder.Configuration["Jwt:Key"]!;
 

@@ -11,4 +11,7 @@ public class RegisterRequest
 
     public string Password { get; set; }
         = default!;
+
+    public string Phone { get; set; }
+        = default!;
 }

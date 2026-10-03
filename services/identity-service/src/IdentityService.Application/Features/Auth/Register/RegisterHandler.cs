@@ -43,6 +43,7 @@ public class RegisterHandler
         {
             Id = Guid.NewGuid(),
             Email = request.Email,
+            Phone = request.Phone,
             Username = request.Username,
             PasswordHash =
                 _passwordHasher.Hash(

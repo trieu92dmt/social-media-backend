@@ -6,5 +6,6 @@ namespace IdentityService.Application
 public record RegisterCommand(
     string Email,
     string Username,
-    string Password
+    string Password,
+    string Phone
 ) : IRequest<Guid>;

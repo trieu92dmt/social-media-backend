@@ -31,4 +31,12 @@ public class PostsController : ControllerBase
             Id = postId
         });
     }
+
+    [HttpGet("test")]
+    public async Task<IActionResult> Test(){
+       return Ok(new
+        {
+            Message = "Post service is running."
+        });
+    }
 }

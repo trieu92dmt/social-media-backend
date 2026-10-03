@@ -33,7 +33,8 @@ public class AuthController
         var command = new RegisterCommand(
             request.Email,
             request.Username,
-            request.Password);
+            request.Password,
+            request.Phone);
 
         var userId =
             await _mediator.Send(command);
