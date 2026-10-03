@@ -42,6 +42,8 @@ public class UserRepository
         GetByIdAsync(Guid id)
     {
         return await _dbContext.Users
+            .Include(u => u.UserRoles)
+            .ThenInclude(ur => ur.Role)
             .FirstOrDefaultAsync(
                 x => x.Id == id);
     }

@@ -37,20 +37,18 @@ public class JwtProvider
                 _configuration[
                     "Jwt:ExpireMinutes"]!);
 
-        var claims = new[]
+        var claims = new List<Claim>
         {
-            new Claim(
-                ClaimTypes.NameIdentifier,
-                user.Id.ToString()),
-
-            new Claim(
-                ClaimTypes.Email,
-                user.Email),
-
-            new Claim(
-                ClaimTypes.Name,
-                user.Username)
+            new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new(ClaimTypes.Email, user.Email),
+            new(ClaimTypes.Name, user.Username)
         };
+
+        claims.AddRange(
+            user.UserRoles
+                .Where(userRole => userRole.Role.IsActive)
+                .Select(userRole =>
+                    new Claim(ClaimTypes.Role, userRole.Role.RoleCode)));
 
         var securityKey =
             new SymmetricSecurityKey(

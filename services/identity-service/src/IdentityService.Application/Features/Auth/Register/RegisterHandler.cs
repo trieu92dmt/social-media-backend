@@ -12,15 +12,18 @@ public class RegisterHandler
 {
     private readonly IUserRepository
         _userRepository;
-
+    private readonly IRoleRepository 
+        _roleRepository;
     private readonly IPasswordHasher
         _passwordHasher;
 
     public RegisterHandler(
         IUserRepository userRepository,
+        IRoleRepository roleRepository,
         IPasswordHasher passwordHasher)
     {
         _userRepository = userRepository;
+        _roleRepository = roleRepository;
         _passwordHasher = passwordHasher;
     }
 
@@ -39,16 +42,29 @@ public class RegisterHandler
                 "Email already exists");
         }
 
+        // Get the default role for new users
+        var defaultRole = await _roleRepository.GetByCodeAsync(RoleConstants.User);
+
+        var newUserId = Guid.NewGuid();
+
         var user = new User
         {
-            Id = Guid.NewGuid(),
+            Id = newUserId,
             Email = request.Email,
             Phone = request.Phone,
             Username = request.Username,
             PasswordHash =
                 _passwordHasher.Hash(
                     request.Password),
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = DateTime.UtcNow,
+            UserRoles = new List<UserRole>
+            {
+                new UserRole
+                {
+                    RoleId = defaultRole?.Id ?? throw new Exception("Default role not found"),
+                    UserId = newUserId
+                }
+            }
         };
 
         await _userRepository.AddAsync(user);
