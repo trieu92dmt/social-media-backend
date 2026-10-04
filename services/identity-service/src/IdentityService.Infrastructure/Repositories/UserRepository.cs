@@ -34,6 +34,8 @@ public class UserRepository
         GetByEmailAsync(string email)
     {
         return await _dbContext.Users
+            .Include(u => u.UserRoles)
+            .ThenInclude(ur => ur.Role)
             .FirstOrDefaultAsync(
                 x => x.Email == email);
     }

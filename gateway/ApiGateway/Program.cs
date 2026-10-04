@@ -1,10 +1,19 @@
 using System.Text;
-using ApiGateway.Api.Authorization;
+using ApiGateway.Authorization;
+using ApiGateway.Cache;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add redis
+builder.Services.AddScoped<IRolePermissionCache, RolePermissionCache>();
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration =
+        builder.Configuration.GetConnectionString("Redis");
+});
 
 // Add Authorization
 builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();

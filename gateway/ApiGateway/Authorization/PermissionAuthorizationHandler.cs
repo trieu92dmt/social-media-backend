@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Controllers;
 
-namespace ApiGateway.Api.Authorization;
+namespace ApiGateway.Authorization;
 
 public sealed class PermissionAuthorizationHandler
     : AuthorizationHandler<PermissionAuthorizationRequirement>
