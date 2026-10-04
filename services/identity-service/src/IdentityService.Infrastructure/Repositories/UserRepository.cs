@@ -1,4 +1,4 @@
-using IdentityService.Application.Interfaces;
+using IdentityService.Application.Abstractions.Repositories;
 using IdentityService.Domain.Entities;
 using IdentityService.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -18,9 +18,7 @@ public class UserRepository
 
     public async Task AddAsync(User user)
     {
-        _dbContext.Users.Add(user);
-
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.Users.AddAsync(user);
     }
 
     public async Task<bool>
@@ -48,5 +46,10 @@ public class UserRepository
             .ThenInclude(ur => ur.Role)
             .FirstOrDefaultAsync(
                 x => x.Id == id);
+    }
+
+    public async Task SaveChangesAsync()
+    {
+        await _dbContext.SaveChangesAsync();
     }
 }

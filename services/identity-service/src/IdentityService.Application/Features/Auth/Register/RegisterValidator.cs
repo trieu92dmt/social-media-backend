@@ -19,5 +19,15 @@ public class RegisterValidator
         RuleFor(x => x.Password)
             .NotEmpty()
             .MinimumLength(6);
+
+        // ConfirmPassword must match Password
+        RuleFor(x => x.ConfirmPassword)
+            .NotEmpty()
+            .Equal(x => x.Password)
+            .WithMessage("Passwords do not match.");
+
+        // FullName is require
+        RuleFor(x => x.FullName)
+            .NotEmpty();
     }
 }

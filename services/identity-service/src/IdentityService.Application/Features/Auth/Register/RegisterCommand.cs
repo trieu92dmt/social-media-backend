@@ -7,5 +7,9 @@ public record RegisterCommand(
     string Email,
     string Username,
     string Password,
-    string Phone
+    string ConfirmPassword,
+    string Phone,
+    string FullName,
+    DateTime? DOB,
+    string Address
 ) : IRequest<Guid>;

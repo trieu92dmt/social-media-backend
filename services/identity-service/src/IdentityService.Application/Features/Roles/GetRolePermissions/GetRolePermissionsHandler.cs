@@ -1,4 +1,4 @@
-using IdentityService.Application.Interfaces;
+using IdentityService.Application.Abstractions.Repositories;
 using MediatR;
 
 namespace IdentityService.Application

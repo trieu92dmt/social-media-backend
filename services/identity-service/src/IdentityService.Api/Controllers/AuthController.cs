@@ -34,7 +34,11 @@ public class AuthController
             request.Email,
             request.Username,
             request.Password,
-            request.Phone);
+            request.ConfirmPassword,
+            request.Phone,
+            request.FullName,
+            request.DOB,
+            request.Address);
 
         var userId =
             await _mediator.Send(command);

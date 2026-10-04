@@ -1,7 +1,8 @@
+using IdentityService.Application.Abstractions.Repositories;
 using IdentityService.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace IdentityService.Application.Interfaces;
+namespace IdentityService.Infrastructure.Repositories;
 
 public class RolePermissionRepository : IRolePermissionRepository
 {

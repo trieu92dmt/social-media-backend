@@ -1,4 +1,4 @@
-using IdentityService.Application.Interfaces;
+using IdentityService.Application.Abstractions.Security;
 
 namespace IdentityService.Infrastructure.Security;
 

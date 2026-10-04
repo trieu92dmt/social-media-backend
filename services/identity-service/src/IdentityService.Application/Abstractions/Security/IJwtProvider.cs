@@ -1,6 +1,6 @@
 using IdentityService.Domain.Entities;
 
-namespace IdentityService.Application.Interfaces;
+namespace IdentityService.Application.Abstractions.Security;
 
 public interface IJwtProvider
 {

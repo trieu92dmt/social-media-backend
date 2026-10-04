@@ -1,4 +1,7 @@
-using IdentityService.Application.Interfaces;
+using BuildingBlocks.Contracts.Identity;
+using IdentityService.Application.Abstractions.Messaging;
+using IdentityService.Application.Abstractions.Repositories;
+using IdentityService.Application.Abstractions.Security;
 using IdentityService.Domain.Entities;
 using MediatR;
 
@@ -17,20 +20,26 @@ public class RegisterHandler
     private readonly IPasswordHasher
         _passwordHasher;
 
+    private readonly IMessagePublisher
+        _messagePublisher;
+
     public RegisterHandler(
         IUserRepository userRepository,
         IRoleRepository roleRepository,
-        IPasswordHasher passwordHasher)
+        IPasswordHasher passwordHasher,
+        IMessagePublisher messagePublisher)
     {
         _userRepository = userRepository;
         _roleRepository = roleRepository;
         _passwordHasher = passwordHasher;
+        _messagePublisher = messagePublisher;
     }
 
     public async Task<Guid> Handle(
         RegisterCommand request,
         CancellationToken cancellationToken)
     {
+        // Check if the email already exists
         var exists =
             await _userRepository
                 .ExistsByEmailAsync(
@@ -50,12 +59,12 @@ public class RegisterHandler
         var user = new User
         {
             Id = newUserId,
-            Email = request.Email,
-            Phone = request.Phone,
             Username = request.Username,
             PasswordHash =
                 _passwordHasher.Hash(
                     request.Password),
+            Email = request.Email,
+            Phone = request.Phone,
             CreatedAt = DateTime.UtcNow,
             UserRoles = new List<UserRole>
             {
@@ -68,6 +77,18 @@ public class RegisterHandler
         };
 
         await _userRepository.AddAsync(user);
+
+        // Publish a message to RabbitMQ for the new user registration
+        await _messagePublisher.PublishAsync(new UserRegisteredEvent
+        {
+            Id = newUserId,
+            FullName = request.FullName,
+            DisplayName = request.Username,
+            DOB = request.DOB,
+            Address = request.Address
+        }, cancellationToken);
+
+        await _userRepository.SaveChangesAsync();
 
         return user.Id;
     }

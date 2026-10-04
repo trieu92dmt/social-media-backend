@@ -1,9 +1,10 @@
 using IdentityService.Application
     .Features.Auth.Login;
 using IdentityService.Domain.Entities;
-using IdentityService.Application.Interfaces;
+using IdentityService.Application.Abstractions.Repositories;
 
 using MediatR;
+using IdentityService.Application.Abstractions.Security;
 
 namespace IdentityService.Application
     .Features.Auth.Refresh;

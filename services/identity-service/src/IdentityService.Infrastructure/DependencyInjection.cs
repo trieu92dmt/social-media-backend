@@ -1,7 +1,11 @@
-using IdentityService.Application.Interfaces;
+using IdentityService.Application.Abstractions.Messaging;
+using IdentityService.Application.Abstractions.Security;
+using IdentityService.Application.Abstractions.Repositories;
+using IdentityService.Infrastructure.Messaging;
 using IdentityService.Infrastructure.Persistence;
 using IdentityService.Infrastructure.Repositories;
 using IdentityService.Infrastructure.Security;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +27,25 @@ public static class DependencyInjection
                         "Postgres"));
             });
 
+        // RabbitMQ connection
+        services.AddMassTransit(config =>
+        {
+            config.AddEntityFrameworkOutbox<IdentityDbContext>(o =>
+                {
+                    o.UsePostgres();
+                    o.UseBusOutbox();
+                });
+
+            config.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host(configuration["RabbitMQ:Host"], "/", h =>
+                {
+                    h.Username(configuration["RabbitMQ:Username"] ?? "guest");
+                    h.Password(configuration["RabbitMQ:Password"] ?? "guest");
+                });
+            });
+        });
+
         services.AddScoped<IUserRepository, UserRepository>();
 
         services.AddScoped<IRoleRepository, RoleRepository>();
@@ -36,6 +59,8 @@ public static class DependencyInjection
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
         services.AddScoped<IRefreshTokenGenerator, RefreshTokenGenerator>();
+
+        services.AddScoped<IMessagePublisher, MassTransitMessagePublisher>();
 
         return services;
     }

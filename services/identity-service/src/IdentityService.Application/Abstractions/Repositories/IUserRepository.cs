@@ -1,10 +1,12 @@
 using IdentityService.Domain.Entities;
 
-namespace IdentityService.Application.Interfaces;
+namespace IdentityService.Application.Abstractions.Repositories;
 
 public interface IUserRepository
 {
     Task AddAsync(User user);
+
+    Task SaveChangesAsync();
 
     Task<bool> ExistsByEmailAsync(
         string email);

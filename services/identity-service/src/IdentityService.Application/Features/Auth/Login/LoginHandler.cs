@@ -1,4 +1,5 @@
-using IdentityService.Application.Interfaces;
+using IdentityService.Application.Abstractions.Repositories;
+using IdentityService.Application.Abstractions.Security;
 using IdentityService.Domain.Entities;
 using MediatR;
 
